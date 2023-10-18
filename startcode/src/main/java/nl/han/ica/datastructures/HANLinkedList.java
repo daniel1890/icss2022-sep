@@ -8,10 +8,10 @@ public class HANLinkedList<T> implements  IHANLinkedList<T>{
     @Override
     public void addFirst(T value) {
         if (this.head == null) {
-            this.head = new ListNode<>(element);
+            this.head = new ListNode<>(value);
         }
         else {
-            ListNode<T> newNode = new ListNode<>(element);
+            ListNode<T> newNode = new ListNode<>(value);
             newNode.setNext(this.head);
             this.head = newNode;
         }
