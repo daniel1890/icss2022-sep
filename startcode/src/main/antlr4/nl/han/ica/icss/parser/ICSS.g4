@@ -39,11 +39,61 @@ COLON: ':';
 PLUS: '+';
 MIN: '-';
 MUL: '*';
+DIV: '/'; // EIGEN UITBREIDING
 ASSIGNMENT_OPERATOR: ':=';
 
 
 
 
 //--- PARSER: ---
-stylesheet: EOF;
+stylesheet: (variableAssignment | styleRule)* EOF;
+styleRule: selector OPEN_BRACE ruleBody CLOSE_BRACE;
+ruleBody: (declaration | ifExpression | variableAssignment)*;
+
+classSelector: CLASS_IDENT;
+idSelector: ID_IDENT;
+tagSelector: LOWER_IDENT;
+selector: classSelector | idSelector | tagSelector;
+
+declaration: LOWER_IDENT COLON expression SEMICOLON;
+
+variable: CAPITAL_IDENT;
+variableAssignment: variable ASSIGNMENT_OPERATOR expression SEMICOLON;
+
+literal: COLOR | PIXELSIZE | PERCENTAGE | SCALAR | TRUE | FALSE;
+
+expression: additiveExpression | multiplicativeExpression | literal;
+additiveExpression: multiplicativeExpression ((PLUS | MIN) multiplicativeExpression)*;
+multiplicativeExpression: primaryExpression ((MUL | DIV) primaryExpression)*;
+primaryExpression: (literal) | '(' expression ')';
+ifExpression: IF BOX_BRACKET_OPEN expression BOX_BRACKET_CLOSE OPEN_BRACE styleRule CLOSE_BRACE (ELSE OPEN_BRACE styleRule CLOSE_BRACE)?;
+
+//
+//--- PARSER: ---
+//stylesheet: variableAssignment* styleRule* EOF;
+//styleRule: selector OPEN_BRACE ruleBody CLOSE_BRACE;
+//declaration: propertyName COLON expression SEMICOLON;
+//propertyName: LOWER_IDENT;
+//
+//variableAssignment: variableReference ASSIGNMENT_OPERATOR expression+ SEMICOLON;
+//
+//ifClause: IF BOX_BRACKET_OPEN (variableReference | boolLiteral) BOX_BRACKET_CLOSE OPEN_BRACE ruleBody CLOSE_BRACE elseClause?;
+//elseClause: ELSE OPEN_BRACE ruleBody CLOSE_BRACE;
+//
+//expression: literal | expression (MUL | DIV) expression | expression (PLUS | MIN) expression;
+//
+//boolLiteral: TRUE | FALSE;
+//colorLiteral: COLOR;
+//percentageLiteral: PERCENTAGE;
+//pixelLiteral: PIXELSIZE;
+//scalarLiteral: SCALAR;
+//variableReference: CAPITAL_IDENT;
+//literal: boolLiteral | colorLiteral | percentageLiteral | pixelLiteral | scalarLiteral | variableReference;
+//
+//classSelector: CLASS_IDENT;
+//tagSelector: LOWER_IDENT;
+//idSelector: ID_IDENT | COLOR;
+//selector: (tagSelector | classSelector | idSelector) (COMMA selector)*;
+//
+//ruleBody: (declaration | ifClause | variableAssignment)*;
 
