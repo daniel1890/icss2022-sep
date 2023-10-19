@@ -2,7 +2,7 @@ package nl.han.ica.datastructures;
 
 import java.util.Iterator;
 
-public class HANLinkedList<T> implements  IHANLinkedList<T>{
+public class HANLinkedList<T> implements IHANLinkedList<T>{
     private ListNode<T> head;
     private int length;
     @Override
@@ -117,6 +117,7 @@ public class HANLinkedList<T> implements  IHANLinkedList<T>{
         return size;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new ListIterator<>(head);
     }
