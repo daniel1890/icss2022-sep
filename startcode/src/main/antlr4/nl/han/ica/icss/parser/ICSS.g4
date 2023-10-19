@@ -52,7 +52,7 @@ stylesheet: variableAssignment* (styleRule | declaration)* EOF;
 // styleRule: Vertegenwoordigt een CSS-stijlregel met een selector en een reeks declaraties zoals in ".button { color: #ff0000; }".
 styleRule: selector OPEN_BRACE ruleBody CLOSE_BRACE;
 
-// ruleBody: Hier bevatten we de declaraties die samen een stijlregel vormen, bijvoorbeeld "{ color: #ff0000; font-size: 14px; }".
+// ruleBody: Hier zijn declaraties omvat die samen een stijlregel vormen, bijvoorbeeld "{ color: #ff0000; font-size: 14px; }".
 ruleBody: (declaration | ifExpression | variableAssignment)*;
 
 // classSelector, idSelector, tagSelector: Definieert verschillende soorten CSS-selectoren die gebruikt kunnen worden om elementen te selecteren, zoals ".button", "#header", "p".
@@ -79,5 +79,5 @@ additiveExpression: multiplicativeExpression ((PLUS | MIN) multiplicativeExpress
 multiplicativeExpression: primaryExpression ((MUL | DIV) primaryExpression)*;
 primaryExpression: literal | '(' expression ')';
 
-// ifExpression: Hiermee definiëren we voorwaardelijke expressies met een IF-voorwaarde en optionele ELSE-tak, zoals "if [UseLinkColor] { color: LinkColor; } else { color: #000000; }".
-ifExpression: IF BOX_BRACKET_OPEN expression BOX_BRACKET_CLOSE OPEN_BRACE styleRule CLOSE_BRACE (ELSE OPEN_BRACE styleRule CLOSE_BRACE)?;
+// ifExpression: Hiermee worden voorwaardelijke expressies met een IF-voorwaarde en optionele ELSE-tak opgesteld, zoals "if [UseLinkColor] { color: LinkColor; } else { color: #000000; }".
+ifExpression: IF BOX_BRACKET_OPEN (variable | TRUE | FALSE) BOX_BRACKET_CLOSE OPEN_BRACE ruleBody CLOSE_BRACE (ELSE OPEN_BRACE ruleBody CLOSE_BRACE)?;
