@@ -55,7 +55,7 @@ class HANQueueTest {
         sut.enqueue(1);
 
         // Act
-        assertEquals(1, sut.getSize());
+        assertEquals(expectedLengthBeforeClear, sut.getSize());
         sut.clear();
 
         // Assert

@@ -97,7 +97,7 @@ public class HANLinkedList<T> implements IHANLinkedList<T>{
     @Override
     public T getFirst() {
         if (this.head!= null) {
-            return (T) this.head.getData();
+            return this.head.getData();
         }
         else {
             return null;
@@ -107,11 +107,9 @@ public class HANLinkedList<T> implements IHANLinkedList<T>{
     @Override
     public int getSize() {
         int size = 0;
-        Iterator<T> iterator = iterator();
 
-        while(iterator.hasNext()) {
+        for (T t : this) {
             size++;
-            iterator.next();
         }
 
         return size;
