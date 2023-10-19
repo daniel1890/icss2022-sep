@@ -46,54 +46,38 @@ ASSIGNMENT_OPERATOR: ':=';
 
 
 //--- PARSER: ---
-stylesheet: (variableAssignment | styleRule)* EOF;
+// stylesheet: Matcht een volledige CSS-stylesheet en stelt het in staat variabele toewijzingen, stijlregels en declaraties te bevatten.
+stylesheet: variableAssignment* (styleRule | declaration)* EOF;
+
+// styleRule: Vertegenwoordigt een CSS-stijlregel met een selector en een reeks declaraties zoals in ".button { color: #ff0000; }".
 styleRule: selector OPEN_BRACE ruleBody CLOSE_BRACE;
+
+// ruleBody: Hier bevatten we de declaraties die samen een stijlregel vormen, bijvoorbeeld "{ color: #ff0000; font-size: 14px; }".
 ruleBody: (declaration | ifExpression | variableAssignment)*;
 
+// classSelector, idSelector, tagSelector: Definieert verschillende soorten CSS-selectoren die gebruikt kunnen worden om elementen te selecteren, zoals ".button", "#header", "p".
 classSelector: CLASS_IDENT;
 idSelector: ID_IDENT;
 tagSelector: LOWER_IDENT;
+
+// selector: Hiermee specificeren we de selectors voor stijlregels, zoals "p", ".button", of "#header".
 selector: classSelector | idSelector | tagSelector;
 
+// declaration: Stelt een CSS-declaratie voor met een eigenschap en een waarde, bijvoorbeeld "color: #ff0000;".
 declaration: LOWER_IDENT COLON expression SEMICOLON;
 
+// variable en variableAssignment: Hiermee kunnen variabelen gedefinieerd worden en bepaalde waardes toegewezen worden, zoals "LinkColor := #ff0000;".
 variable: CAPITAL_IDENT;
-variableAssignment: variable ASSIGNMENT_OPERATOR expression SEMICOLON;
+variableAssignment: variable ASSIGNMENT_OPERATOR expression+ SEMICOLON;
 
-literal: COLOR | PIXELSIZE | PERCENTAGE | SCALAR | TRUE | FALSE;
+// literal: Definieert mogelijke letterlijke waarden zoals kleuren, grootten, scalars, booleaanse waarden en variabelen, bijvoorbeeld "TRUE", "#ff0000", "500px".
+literal: COLOR | PIXELSIZE | PERCENTAGE | SCALAR | TRUE | FALSE | variable;
 
+// expression, additiveExpression, multiplicativeExpression en primaryExpression: Definieert expressies en de volgorde van evaluatie, bijvoorbeeld "5 + 3 * (LinkColor + 2px)".
 expression: additiveExpression | multiplicativeExpression | literal;
 additiveExpression: multiplicativeExpression ((PLUS | MIN) multiplicativeExpression)*;
 multiplicativeExpression: primaryExpression ((MUL | DIV) primaryExpression)*;
-primaryExpression: (literal) | '(' expression ')';
+primaryExpression: literal | '(' expression ')';
+
+// ifExpression: Hiermee definiëren we voorwaardelijke expressies met een IF-voorwaarde en optionele ELSE-tak, zoals "if [UseLinkColor] { color: LinkColor; } else { color: #000000; }".
 ifExpression: IF BOX_BRACKET_OPEN expression BOX_BRACKET_CLOSE OPEN_BRACE styleRule CLOSE_BRACE (ELSE OPEN_BRACE styleRule CLOSE_BRACE)?;
-
-//
-//--- PARSER: ---
-//stylesheet: variableAssignment* styleRule* EOF;
-//styleRule: selector OPEN_BRACE ruleBody CLOSE_BRACE;
-//declaration: propertyName COLON expression SEMICOLON;
-//propertyName: LOWER_IDENT;
-//
-//variableAssignment: variableReference ASSIGNMENT_OPERATOR expression+ SEMICOLON;
-//
-//ifClause: IF BOX_BRACKET_OPEN (variableReference | boolLiteral) BOX_BRACKET_CLOSE OPEN_BRACE ruleBody CLOSE_BRACE elseClause?;
-//elseClause: ELSE OPEN_BRACE ruleBody CLOSE_BRACE;
-//
-//expression: literal | expression (MUL | DIV) expression | expression (PLUS | MIN) expression;
-//
-//boolLiteral: TRUE | FALSE;
-//colorLiteral: COLOR;
-//percentageLiteral: PERCENTAGE;
-//pixelLiteral: PIXELSIZE;
-//scalarLiteral: SCALAR;
-//variableReference: CAPITAL_IDENT;
-//literal: boolLiteral | colorLiteral | percentageLiteral | pixelLiteral | scalarLiteral | variableReference;
-//
-//classSelector: CLASS_IDENT;
-//tagSelector: LOWER_IDENT;
-//idSelector: ID_IDENT | COLOR;
-//selector: (tagSelector | classSelector | idSelector) (COMMA selector)*;
-//
-//ruleBody: (declaration | ifClause | variableAssignment)*;
-
