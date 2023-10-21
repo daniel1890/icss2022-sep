@@ -34,7 +34,6 @@ public class Checker {
      * @param ast Het Abstract Syntax Tree-object dat moet worden gecontroleerd.
      */
     public void check(AST ast) {
-        variableTypes.clear();
         checkStylesheet(ast.root);
     }
 
