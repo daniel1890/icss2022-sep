@@ -27,14 +27,14 @@ _tabel 2: eisen parser_
 
 | Code | Omschrijving | Geïmplementeerd |
 |------|--------------|-----------------|
-| CH00 | Minimaal vier van onderstaande checks moeten zijn geïmplementeerd	             |                 |
-| CH01 | Controleer of er geen variabelen worden gebruikt die niet gedefinieerd zijn.	             |                 |
-| CH02 | Controleer of de operanden van de operaties plus en min van gelijk type zijn. Je mag geen pixels bij percentages optellen bijvoorbeeld. Controleer dat bij vermenigvuldigen minimaal een operand een scalaire waarde is. Zo mag 20% * 3 en 4 * 5 wel, maar mag 2px * 3px niet.	             |                 |
-| CH03 | Controleer of er geen kleuren worden gebruikt in operaties (plus, min en keer).	             |                 |
-| CH04 | Controleer of bij declaraties het type van de value klopt met de property. Declaraties zoals width: #ff0000 of color: 12px zijn natuurlijk onzin.	             |                 |
-| CH05 | Controleer of de conditie bij een if-statement van het type boolean is (zowel bij een variabele-referentie als een boolean literal)	             |                 |
-| CH06 | Controleer of variabelen enkel binnen hun scope gebruikt worden	             |                 |
-_tabel 3: eisen phecker_
+| CH00 | Minimaal vier van onderstaande checks moeten zijn geïmplementeerd	             |  &check;                |
+| CH01 | Controleer of er geen variabelen worden gebruikt die niet gedefinieerd zijn.	             | &check;                 |
+| CH02 | Controleer of de operanden van de operaties plus en min van gelijk type zijn. Je mag geen pixels bij percentages optellen bijvoorbeeld. Controleer dat bij vermenigvuldigen minimaal een operand een scalaire waarde is. Zo mag 20% * 3 en 4 * 5 wel, maar mag 2px * 3px niet.	             |  &check;                |
+| CH03 | Controleer of er geen kleuren worden gebruikt in operaties (plus, min en keer).	             | &check;                 |
+| CH04 | Controleer of bij declaraties het type van de value klopt met de property. Declaraties zoals width: #ff0000 of color: 12px zijn natuurlijk onzin.	             | &check;                 |
+| CH05 | Controleer of de conditie bij een if-statement van het type boolean is (zowel bij een variabele-referentie als een boolean literal)	             | &check;                 |
+| CH06 | Controleer of variabelen enkel binnen hun scope gebruikt worden	             | &check;                 |
+_tabel 3: eisen checker_
 <br />
 <br />
 
