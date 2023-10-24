@@ -80,11 +80,8 @@ pixelLiteral: PIXELSIZE;
 scalarLiteral: SCALAR;
 literal: boolLiteral | colorLiteral | percentageLiteral | pixelLiteral | scalarLiteral | variableReference;
 
-// expression, additiveExpression, multiplicativeExpression en primaryExpression: Definieert expressies en de volgorde van evaluatie, bijvoorbeeld "5 + 3 * (LinkColor + 2px)".
-expression: additiveExpression | multiplicativeExpression | literal;
-additiveExpression: multiplicativeExpression ((PLUS | MIN) multiplicativeExpression)*;
-multiplicativeExpression: primaryExpression ((MUL | DIV) primaryExpression)*;
-primaryExpression: literal | '(' expression ')';
+// expression: Definieert expressies en de volgorde van evaluatie, bijvoorbeeld "5 + 3 * (LinkColor + 2px)".
+expression: literal | expression (MUL | DIV) expression | expression (PLUS | MIN) expression;
 
 // ifClause: Hiermee worden voorwaardelijke expressies met een IF-voorwaarde en optionele ELSE-tak opgesteld, zoals "if [UseLinkColor] { color: LinkColor; } else { color: #000000; }".
 ifClause: IF BOX_BRACKET_OPEN (variableReference | boolLiteral) BOX_BRACKET_CLOSE OPEN_BRACE ruleBody CLOSE_BRACE elseClause?;
