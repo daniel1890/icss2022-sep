@@ -221,7 +221,6 @@ public class Checker {
         }
 
 
-
         if (left == ExpressionType.COLOR || right == ExpressionType.COLOR || left == ExpressionType.BOOL || right == ExpressionType.BOOL) {
             operation.setError("Booleans en colors zijn niet toegestaan in een operation.");
             return ExpressionType.UNDEFINED;
@@ -277,6 +276,7 @@ public class Checker {
             variableReference.setError("Variabele is nog niet gedeclareerd of is niet in dezelfde scope.");
             return ExpressionType.UNDEFINED;
         }
+
         return expressionType;
     }
 
@@ -303,6 +303,7 @@ public class Checker {
                 return type;
             }
         }
+
         return null;
     }
 
