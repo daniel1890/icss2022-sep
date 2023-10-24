@@ -209,7 +209,7 @@ public class Checker {
         ExpressionType right;
 
         if (operation.lhs instanceof Operation) {
-            left = checkOperation((Operation) operation.rhs);
+            left = checkOperation((Operation) operation.lhs);
         } else {
             left = checkExpressionType(operation.lhs);
         }

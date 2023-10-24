@@ -81,6 +81,83 @@ public class Evaluator implements Transform {
     }
 
     /**
+     * Evalueer een operatie en retourneer het resultaat.
+     *
+     * @param operation De operatie om te evalueren.
+     * @return Het resultaat van de evaluatie als een literal.
+     */
+    private Literal evaluateOperation(Operation operation) {
+        Literal left = getLiteralFromExpression(operation.lhs);
+        Literal right = getLiteralFromExpression(operation.rhs);
+
+        int leftValue = getLiteralValue(left);
+        int rightValue = getLiteralValue(right);
+
+        if (operation instanceof AddOperation) {
+            return createLiteral(left, leftValue + rightValue);
+        } else if (operation instanceof SubtractOperation) {
+            return createLiteral(left, leftValue - rightValue);
+        } else if (operation instanceof MultiplyOperation) {
+            if (right instanceof ScalarLiteral) {
+                return createLiteral(left, leftValue * rightValue);
+            } else {
+                return createLiteral(right, leftValue * rightValue);
+            }
+        } else {
+            return createLiteral(left, leftValue / rightValue);
+        }
+    }
+
+    /**
+     * Haal de waarde van een literal op.
+     *
+     * @param literal De literal waarvan de waarde wordt opgehaald.
+     * @return De integer waarde van de literal.
+     */
+    private int getLiteralValue(Literal literal) {
+        if (literal instanceof PixelLiteral) {
+            return ((PixelLiteral) literal).value;
+        } else if (literal instanceof ScalarLiteral) {
+            return ((ScalarLiteral) literal).value;
+        } else {
+            return ((PercentageLiteral) literal).value;
+        }
+    }
+
+    /**
+     * Creëer een nieuwe literal op basis van het gegeven waarde en het type van de originele literal.
+     *
+     * @param literal De originele literal waarvan het type wordt behouden.
+     * @param value   De nieuwe waarde van de literal.
+     * @return Een nieuwe literal met de bijgewerkte waarde.
+     */
+    private Literal createLiteral(Literal literal, int value) {
+        if (literal instanceof PixelLiteral) {
+            return new PixelLiteral(value);
+        } else if (literal instanceof ScalarLiteral) {
+            return new ScalarLiteral(value);
+        } else {
+            return new PercentageLiteral(value);
+        }
+    }
+
+    /**
+     * Haal een literal op uit een expressie en evalueer deze indien nodig.
+     *
+     * @param expression De expressie waaruit een literal moet worden opgehaald of geëvalueerd.
+     * @return Een literal afkomstig uit de expressie of een geëvalueerde literal.
+     */
+    private Literal getLiteralFromExpression(Expression expression) {
+        if (expression instanceof Operation) {
+            return evaluateOperation((Operation) expression);
+        } else if (expression instanceof VariableReference) {
+            return getVariableLiteral(((VariableReference) expression).name, variableValues);
+        } else {
+            return (Literal) expression;
+        }
+    }
+
+    /**
      * Haal de waarde van een variabele op in de gegeven linked list.
      *
      * @param key            De naam van de variabele.
@@ -121,6 +198,23 @@ public class Evaluator implements Transform {
         stylerule.body = nodesToAdd;
     }
 
+    /**
+     * Evalueer de body van een stylerule en werk deze bij.
+     *
+     * @param ruleBody   Het kind van de stylerule om te evalueren.
+     * @param parentBody De lijst waarin de bijgewerkte nodes worden toegevoegd.
+     */
+    private void evaluateStyleruleBody(ASTNode ruleBody, ArrayList<ASTNode> parentBody) {
+        if (ruleBody instanceof VariableAssignment) {
+            evaluateVariableAssignment((VariableAssignment) ruleBody);
+        } else if (ruleBody instanceof Declaration) {
+            evaluateDeclaration((Declaration) ruleBody);
+            parentBody.add(ruleBody);
+        } else if (ruleBody instanceof IfClause) {
+            evaluateIfClause((IfClause) ruleBody, parentBody);
+        }
+    }
+
 //    /**
 //     * Controleer of er duplicaten van CSS-eigenschappen zijn in de gegeven lijst van regels.
 //     *
@@ -140,100 +234,6 @@ public class Evaluator implements Transform {
 //
 //        return false;
 //    }
-
-    /**
-     * Evalueer een operatie en retourneer het resultaat.
-     *
-     * @param operation De operatie om te evalueren.
-     * @return Het resultaat van de evaluatie als een literal.
-     */
-    private Literal evaluateOperation(Operation operation) {
-        Literal left = getLiteralFromExpression(operation.lhs);
-        Literal right = getLiteralFromExpression(operation.rhs);
-
-        int leftValue = getLiteralValue(left);
-        int rightValue = getLiteralValue(right);
-
-        if (operation instanceof AddOperation) {
-            return createLiteral(left, leftValue + rightValue);
-        } else if (operation instanceof SubtractOperation) {
-            return createLiteral(left, leftValue - rightValue);
-        } else if (operation instanceof MultiplyOperation) {
-            if (right instanceof ScalarLiteral) {
-                return createLiteral(left, leftValue * rightValue);
-            } else {
-                return createLiteral(right, leftValue * rightValue);
-            }
-        } else {
-            return createLiteral(left, leftValue / rightValue);
-        }
-    }
-
-    /**
-     * Creëer een nieuwe literal op basis van het gegeven waarde en het type van de originele literal.
-     *
-     * @param literal De originele literal waarvan het type wordt behouden.
-     * @param value   De nieuwe waarde van de literal.
-     * @return Een nieuwe literal met de bijgewerkte waarde.
-     */
-    private Literal createLiteral(Literal literal, int value) {
-        if (literal instanceof PixelLiteral) {
-            return new PixelLiteral(value);
-        } else if (literal instanceof ScalarLiteral) {
-            return new ScalarLiteral(value);
-        } else {
-            return new PercentageLiteral(value);
-        }
-    }
-
-    /**
-     * Haal een literal op uit een expressie en evalueer deze indien nodig.
-     *
-     * @param expression De expressie waaruit een literal moet worden opgehaald of geëvalueerd.
-     * @return Een literal afkomstig uit de expressie of een geëvalueerde literal.
-     */
-    private Literal getLiteralFromExpression(Expression expression) {
-        if (expression instanceof Operation) {
-            return evaluateOperation((Operation) expression);
-        } else if (expression instanceof VariableReference) {
-            return getVariableLiteral(((VariableReference) expression).name, variableValues);
-        } else {
-            return (Literal) expression;
-        }
-    }
-
-    /**
-     * Haal de waarde van een literal op.
-     *
-     * @param literal De literal waarvan de waarde wordt opgehaald.
-     * @return De integer waarde van de literal.
-     */
-    private int getLiteralValue(Literal literal) {
-        if (literal instanceof PixelLiteral) {
-            return ((PixelLiteral) literal).value;
-        } else if (literal instanceof ScalarLiteral) {
-            return ((ScalarLiteral) literal).value;
-        } else {
-            return ((PercentageLiteral) literal).value;
-        }
-    }
-
-    /**
-     * Evalueer de body van een stylerule en werk deze bij.
-     *
-     * @param ruleBody   Het kind van de stylerule om te evalueren.
-     * @param parentBody De lijst waarin de bijgewerkte nodes worden toegevoegd.
-     */
-    private void evaluateStyleruleBody(ASTNode ruleBody, ArrayList<ASTNode> parentBody) {
-        if (ruleBody instanceof VariableAssignment) {
-            evaluateVariableAssignment((VariableAssignment) ruleBody);
-        } else if (ruleBody instanceof Declaration) {
-            evaluateDeclaration((Declaration) ruleBody);
-            parentBody.add(ruleBody);
-        } else if (ruleBody instanceof IfClause) {
-            evaluateIfClause((IfClause) ruleBody, parentBody);
-        }
-    }
 
     /**
      * Evalueer een declaratie en werk de expressie binnenin bij.
