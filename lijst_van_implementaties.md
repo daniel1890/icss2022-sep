@@ -41,8 +41,8 @@ _tabel 3: eisen checker_
 
 | Code | Omschrijving | Geïmplementeerd |
 |------|--------------|-----------------|
-| TR01 | Evalueer expressies. Schrijf een transformatie in Evaluator die alle Expression knopen in de AST door een Literal knoop met de berekende waarde vervangt.	             |                 |
-| TR02 | Evalueer if/else expressies. Schrijf een transformatie in Evaluator die alle IfClauses uit de AST verwijdert. Wanneer de conditie van de IfClause TRUE is wordt deze vervangen door de body van het if-statement. Als de conditie FALSE is dan vervang je de IfClause door de body van de ElseClause. Als er geen ElseClause is bij een negatieve conditie dan verwijder je de IfClause volledig uit de AST.	             |                 |
+| TR01 | Evalueer expressies. Schrijf een transformatie in Evaluator die alle Expression knopen in de AST door een Literal knoop met de berekende waarde vervangt.	             | &check;                  |
+| TR02 | Evalueer if/else expressies. Schrijf een transformatie in Evaluator die alle IfClauses uit de AST verwijdert. Wanneer de conditie van de IfClause TRUE is wordt deze vervangen door de body van het if-statement. Als de conditie FALSE is dan vervang je de IfClause door de body van de ElseClause. Als er geen ElseClause is bij een negatieve conditie dan verwijder je de IfClause volledig uit de AST.	             |  &check;                 |
 _tabel 4: eisen transformer_
 <br />
 <br />

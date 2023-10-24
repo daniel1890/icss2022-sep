@@ -114,32 +114,32 @@ public class Evaluator implements Transform {
 
         variableValues.removeFirst();
 
-        if (containsDuplicatePropertyDeclarations(nodesToAdd)) {
-            stylerule.setError("Stylesheet bevat CSS declaratie met identieke properties.");
-        }
+//        if (containsDuplicatePropertyDeclarations(nodesToAdd)) {
+//            stylerule.setError("Stylesheet bevat CSS declaratie met identieke properties.");
+//        }
 
         stylerule.body = nodesToAdd;
     }
 
-    /**
-     * Controleer of er duplicaten van CSS-eigenschappen zijn in de gegeven lijst van regels.
-     *
-     * @param ruleBody De lijst van regels om te controleren.
-     * @return True als duplicaten worden gevonden, anders false.
-     */
-    private boolean containsDuplicatePropertyDeclarations(List<ASTNode> ruleBody) {
-        Set<String> appeared = new HashSet<>();
-        for (ASTNode rule : ruleBody) {
-            if (rule instanceof Declaration) {
-                String propertyName = ((Declaration) rule).property.name;
-                if (!appeared.add(propertyName)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+//    /**
+//     * Controleer of er duplicaten van CSS-eigenschappen zijn in de gegeven lijst van regels.
+//     *
+//     * @param ruleBody De lijst van regels om te controleren.
+//     * @return True als duplicaten worden gevonden, anders false.
+//     */
+//    private boolean containsDuplicatePropertyDeclarations(List<ASTNode> ruleBody) {
+//        Set<String> appeared = new HashSet<>();
+//        for (ASTNode rule : ruleBody) {
+//            if (rule instanceof Declaration) {
+//                String propertyName = ((Declaration) rule).property.name;
+//                if (!appeared.add(propertyName)) {
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
 
     /**
      * Evalueer een operatie en retourneer het resultaat.

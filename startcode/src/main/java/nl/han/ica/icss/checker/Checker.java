@@ -135,22 +135,22 @@ public class Checker {
         switch (declaration.property.name) {
             case "color":
                 if (expressionType != ExpressionType.COLOR) {
-                    astNode.setError("Color value can only be a color literal.");
+                    astNode.setError("Color waarde kan alleen van type color literal zijn.");
                 }
                 break;
             case "background-color":
                 if (expressionType != ExpressionType.COLOR) {
-                    astNode.setError(declaration.property.name + " de waarde kan alleen van color literal type zijn.");
+                    astNode.setError("Background-color waarde kan alleen van color literal type zijn.");
                 }
                 break;
             case "width":
                 if (expressionType != ExpressionType.PIXEL && expressionType != ExpressionType.PERCENTAGE) {
-                    astNode.setError("Width value can only be a pixel or percentage literal.");
+                    astNode.setError("Width waarde kan alleen van type pixel, of percentage literal zijn.");
                 }
                 break;
             case "height":
                 if (expressionType != ExpressionType.PIXEL && expressionType != ExpressionType.PERCENTAGE) {
-                    astNode.setError(declaration.property.name + " de waarde kan alleen van percentage of pixel literal type zijn.");
+                    astNode.setError("Height waarde kan alleen van percentage of pixel literal type zijn.");
                 }
                 break;
             default:
