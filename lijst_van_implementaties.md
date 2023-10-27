@@ -6,8 +6,8 @@
 |------|--------------|-------------|
 | AL01 | De code behoudt de packagestructuur van de aangeleverde startcode. Toegevoegde code bevindt zich in de relevante packages.             |  &check;           |
 | AL02 | Alle code compileert en is te bouwen met Maven 3.6 of hoger, onder OpenJDK 13. Tip: controleer dit door eerst mvn clean uit te voeren alvorens te compileren en in te leveren, hierop een onvoldoende halen is echt zonde. Gebruik van Oracle versies van Java is uitdrukkelijk niet toegestaan.             |  &check;           |
-| AL03 | De code is goed geformatteerd, zo nodig voorzien van commentaar, correcte variabelenamen gebruikt, bevat geen onnodig ingewikkelde constructies en is zo onderhoudbaar mogelijk opgesteld. (naar oordeel van docent)             |             |
-| AL04 | De docent heeft vastgesteld (tijdens les, assessment of op een andere manier) dat de compiler eigen werk is en dat je voldoet aan de beoordelingscriteria van APP-6, te weten: - Kent de standaardarchitectuur van compilers; - Kent de basisbegrippen over programmeertalen (zoals syntaxis, semantiek).             |             |
+| AL03 | De code is goed geformatteerd, zo nodig voorzien van commentaar, correcte variabelenamen gebruikt, bevat geen onnodig ingewikkelde constructies en is zo onderhoudbaar mogelijk opgesteld. (naar oordeel van docent)             | &check;            |
+| AL04 | De docent heeft vastgesteld (tijdens les, assessment of op een andere manier) dat de compiler eigen werk is en dat je voldoet aan de beoordelingscriteria van APP-6, te weten: - Kent de standaardarchitectuur van compilers; - Kent de basisbegrippen over programmeertalen (zoals syntaxis, semantiek).             | &check;            |
 _tabel 1: algemene eisen_
 <br />
 <br />
@@ -50,14 +50,14 @@ _tabel 4: eisen transformer_
 
 | Code | Omschrijving | Geïmplementeerd |
 |------|--------------|-----------------|
-| GE01 | Implementeer de generator in nl.han.ica.icss.generator.Generator die de AST naar een CSS2-compliant string omzet.	             |                 |
-| GE02 | Zorg dat de CSS met twee spaties inspringing per scopeniveau gegenereerd wordt.	             |                 |
+| GE01 | Implementeer de generator in nl.han.ica.icss.generator.Generator die de AST naar een CSS2-compliant string omzet.	             |  &check;               |
+| GE02 | Zorg dat de CSS met twee spaties inspringing per scopeniveau gegenereerd wordt.	             |  &check;               |
 _tabel 5: eisen generator_
 
 ## Eigen uitbreidingen
 
-| Code | Omschrijving                              | Geïmplementeerd |
-|------|-------------------------------------------|-----------------|
-| EU01 | Voeg naast multiplicatie ook divisie toe	 |                 |
-| EU02 | 	                                         |                 |
+| Code | Omschrijving                                            | Geïmplementeerd |
+|------|---------------------------------------------------------|-----------------|
+| EU01 | Voeg naast multiplicatie ook divisie toe	               | X               |
+| EU02 | Geef mogelijkheid om meerdere selectoren toe te voegen	 | X               |
 _tabel 6: eigen uitbreidingen compiler_

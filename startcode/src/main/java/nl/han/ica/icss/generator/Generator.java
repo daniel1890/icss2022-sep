@@ -39,6 +39,7 @@ public class Generator {
 			}
 		}
 
+		// Verwijder laatste trailing karakter
 		if (stringBuilder.length() > 1) {
 			stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
 		}
@@ -69,6 +70,13 @@ public class Generator {
 		stringBuilder.append(selectors).append(" {\n");
 	}
 
+	/**
+	 * Genereert declaraties voor een gegeven Stylerule-knooppunt door de kinderen van de Stylerule te doorlopen.
+	 * Voor elk kindknooppunt dat een instantie is van het Declaration-type, wordt de methode generateDeclaration opgeroepen
+	 * om de declaratie te verwerken.
+	 *
+	 * @param stylerule Het Stylerule-knooppunt waarvan de declaraties moeten worden gegenereerd.
+	 */
 	private void generateDeclarations(Stylerule stylerule) {
 		for (ASTNode node : stylerule.getChildren()) {
 			if (node instanceof Declaration) {
@@ -106,6 +114,7 @@ public class Generator {
 		if (expression instanceof ColorLiteral) {
 			return ((ColorLiteral) expression).value;
 		}
+
 		return "";
 	}
 }
